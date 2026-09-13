@@ -1,0 +1,834 @@
+{
+  "database_id": "bq_thelook_ecommerce",
+  "database_name": "BigQuery (bigquery-public-data.thelook_ecommerce)",
+  "database_type": "sql",
+  "dialect": "bigquery",
+  "entities": {
+    "users": {
+      "name": "users",
+      "entity_type": "table",
+      "description": "Table users",
+      "attributes": [
+        {
+          "name": "id",
+          "data_type": "INT64",
+          "generic_type": "NUMBER",
+          "is_primary_key": true,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "first_name",
+          "data_type": "STRING",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "last_name",
+          "data_type": "STRING",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "email",
+          "data_type": "STRING",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "age",
+          "data_type": "INT64",
+          "generic_type": "NUMBER",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "gender",
+          "data_type": "STRING",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "state",
+          "data_type": "STRING",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "street_address",
+          "data_type": "STRING",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "postal_code",
+          "data_type": "STRING",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "city",
+          "data_type": "STRING",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "country",
+          "data_type": "STRING",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "latitude",
+          "data_type": "FLOAT64",
+          "generic_type": "NUMBER",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "longitude",
+          "data_type": "FLOAT64",
+          "generic_type": "NUMBER",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "traffic_source",
+          "data_type": "STRING",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "created_at",
+          "data_type": "TIMESTAMP",
+          "generic_type": "DATETIME",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "user_geom",
+          "data_type": "GEOGRAPHY",
+          "generic_type": "GEOMETRY",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ]
+    },
+    "order_items": {
+      "name": "order_items",
+      "entity_type": "table",
+      "description": "Table order_items",
+      "attributes": [
+        {
+          "name": "id",
+          "data_type": "INT64",
+          "generic_type": "NUMBER",
+          "is_primary_key": true,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "order_id",
+          "data_type": "INT64",
+          "generic_type": "NUMBER",
+          "is_primary_key": false,
+          "is_foreign_key": true,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "user_id",
+          "data_type": "INT64",
+          "generic_type": "NUMBER",
+          "is_primary_key": false,
+          "is_foreign_key": true,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "product_id",
+          "data_type": "INT64",
+          "generic_type": "NUMBER",
+          "is_primary_key": false,
+          "is_foreign_key": true,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "inventory_item_id",
+          "data_type": "INT64",
+          "generic_type": "NUMBER",
+          "is_primary_key": false,
+          "is_foreign_key": true,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "status",
+          "data_type": "STRING",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "created_at",
+          "data_type": "TIMESTAMP",
+          "generic_type": "DATETIME",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "shipped_at",
+          "data_type": "TIMESTAMP",
+          "generic_type": "DATETIME",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "delivered_at",
+          "data_type": "TIMESTAMP",
+          "generic_type": "DATETIME",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "returned_at",
+          "data_type": "TIMESTAMP",
+          "generic_type": "DATETIME",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "sale_price",
+          "data_type": "FLOAT64",
+          "generic_type": "NUMBER",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ]
+    },
+    "distribution_centers": {
+      "name": "distribution_centers",
+      "entity_type": "table",
+      "description": "Table distribution_centers",
+      "attributes": [
+        {
+          "name": "id",
+          "data_type": "INT64",
+          "generic_type": "NUMBER",
+          "is_primary_key": true,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "name",
+          "data_type": "STRING",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "latitude",
+          "data_type": "FLOAT64",
+          "generic_type": "NUMBER",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "longitude",
+          "data_type": "FLOAT64",
+          "generic_type": "NUMBER",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "distribution_center_geom",
+          "data_type": "GEOGRAPHY",
+          "generic_type": "GEOMETRY",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ]
+    },
+    "inventory_items": {
+      "name": "inventory_items",
+      "entity_type": "table",
+      "description": "Table inventory_items",
+      "attributes": [
+        {
+          "name": "id",
+          "data_type": "INT64",
+          "generic_type": "NUMBER",
+          "is_primary_key": true,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "product_id",
+          "data_type": "INT64",
+          "generic_type": "NUMBER",
+          "is_primary_key": false,
+          "is_foreign_key": true,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "created_at",
+          "data_type": "TIMESTAMP",
+          "generic_type": "DATETIME",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "sold_at",
+          "data_type": "TIMESTAMP",
+          "generic_type": "DATETIME",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "cost",
+          "data_type": "FLOAT64",
+          "generic_type": "NUMBER",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "product_category",
+          "data_type": "STRING",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "product_name",
+          "data_type": "STRING",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "product_brand",
+          "data_type": "STRING",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "product_retail_price",
+          "data_type": "FLOAT64",
+          "generic_type": "NUMBER",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "product_department",
+          "data_type": "STRING",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "product_sku",
+          "data_type": "STRING",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "product_distribution_center_id",
+          "data_type": "INT64",
+          "generic_type": "NUMBER",
+          "is_primary_key": false,
+          "is_foreign_key": true,
+          "description": "",
+          "sample_values": []
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ]
+    },
+    "products": {
+      "name": "products",
+      "entity_type": "table",
+      "description": "Table products",
+      "attributes": [
+        {
+          "name": "id",
+          "data_type": "INT64",
+          "generic_type": "NUMBER",
+          "is_primary_key": true,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "cost",
+          "data_type": "FLOAT64",
+          "generic_type": "NUMBER",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "category",
+          "data_type": "STRING",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "name",
+          "data_type": "STRING",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "brand",
+          "data_type": "STRING",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "retail_price",
+          "data_type": "FLOAT64",
+          "generic_type": "NUMBER",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "department",
+          "data_type": "STRING",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "sku",
+          "data_type": "STRING",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "distribution_center_id",
+          "data_type": "INT64",
+          "generic_type": "NUMBER",
+          "is_primary_key": false,
+          "is_foreign_key": true,
+          "description": "",
+          "sample_values": []
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ]
+    },
+    "orders": {
+      "name": "orders",
+      "entity_type": "table",
+      "description": "Table orders",
+      "attributes": [
+        {
+          "name": "order_id",
+          "data_type": "INT64",
+          "generic_type": "NUMBER",
+          "is_primary_key": false,
+          "is_foreign_key": true,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "user_id",
+          "data_type": "INT64",
+          "generic_type": "NUMBER",
+          "is_primary_key": false,
+          "is_foreign_key": true,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "status",
+          "data_type": "STRING",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "gender",
+          "data_type": "STRING",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "created_at",
+          "data_type": "TIMESTAMP",
+          "generic_type": "DATETIME",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "returned_at",
+          "data_type": "TIMESTAMP",
+          "generic_type": "DATETIME",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "shipped_at",
+          "data_type": "TIMESTAMP",
+          "generic_type": "DATETIME",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "delivered_at",
+          "data_type": "TIMESTAMP",
+          "generic_type": "DATETIME",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "num_of_item",
+          "data_type": "INT64",
+          "generic_type": "NUMBER",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        }
+      ],
+      "primary_keys": []
+    },
+    "events": {
+      "name": "events",
+      "entity_type": "table",
+      "description": "Table events",
+      "attributes": [
+        {
+          "name": "id",
+          "data_type": "INT64",
+          "generic_type": "NUMBER",
+          "is_primary_key": true,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "user_id",
+          "data_type": "INT64",
+          "generic_type": "NUMBER",
+          "is_primary_key": false,
+          "is_foreign_key": true,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "sequence_number",
+          "data_type": "INT64",
+          "generic_type": "NUMBER",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "session_id",
+          "data_type": "STRING",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": true,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "created_at",
+          "data_type": "TIMESTAMP",
+          "generic_type": "DATETIME",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "ip_address",
+          "data_type": "STRING",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "city",
+          "data_type": "STRING",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "state",
+          "data_type": "STRING",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "postal_code",
+          "data_type": "STRING",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "browser",
+          "data_type": "STRING",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "traffic_source",
+          "data_type": "STRING",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "uri",
+          "data_type": "STRING",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "event_type",
+          "data_type": "STRING",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ]
+    }
+  },
+  "relationships": [
+    {
+      "name": "FK_order_items_orders",
+      "source_entity": "order_items",
+      "source_attribute": "order_id",
+      "target_entity": "orders",
+      "target_attribute": "id",
+      "cardinality": "MANY_TO_ONE",
+      "description": "order_items.order_id references orders.id"
+    },
+    {
+      "name": "FK_order_items_users",
+      "source_entity": "order_items",
+      "source_attribute": "user_id",
+      "target_entity": "users",
+      "target_attribute": "id",
+      "cardinality": "MANY_TO_ONE",
+      "description": "order_items.user_id references users.id"
+    },
+    {
+      "name": "FK_order_items_products",
+      "source_entity": "order_items",
+      "source_attribute": "product_id",
+      "target_entity": "products",
+      "target_attribute": "id",
+      "cardinality": "MANY_TO_ONE",
+      "description": "order_items.product_id references products.id"
+    },
+    {
+      "name": "FK_order_items_inventory_items",
+      "source_entity": "order_items",
+      "source_attribute": "inventory_item_id",
+      "target_entity": "inventory_items",
+      "target_attribute": "id",
+      "cardinality": "MANY_TO_ONE",
+      "description": "order_items.inventory_item_id references inventory_items.id"
+    },
+    {
+      "name": "FK_inventory_items_products",
+      "source_entity": "inventory_items",
+      "source_attribute": "product_id",
+      "target_entity": "products",
+      "target_attribute": "id",
+      "cardinality": "MANY_TO_ONE",
+      "description": "inventory_items.product_id references products.id"
+    },
+    {
+      "name": "FK_products_distribution_centers",
+      "source_entity": "products",
+      "source_attribute": "distribution_center_id",
+      "target_entity": "distribution_centers",
+      "target_attribute": "id",
+      "cardinality": "MANY_TO_ONE",
+      "description": "products.distribution_center_id references distribution_centers.id"
+    },
+    {
+      "name": "FK_orders_orders",
+      "source_entity": "orders",
+      "source_attribute": "order_id",
+      "target_entity": "orders",
+      "target_attribute": "id",
+      "cardinality": "MANY_TO_ONE",
+      "description": "orders.order_id references orders.id"
+    },
+    {
+      "name": "FK_orders_users",
+      "source_entity": "orders",
+      "source_attribute": "user_id",
+      "target_entity": "users",
+      "target_attribute": "id",
+      "cardinality": "MANY_TO_ONE",
+      "description": "orders.user_id references users.id"
+    },
+    {
+      "name": "FK_events_users",
+      "source_entity": "events",
+      "source_attribute": "user_id",
+      "target_entity": "users",
+      "target_attribute": "id",
+      "cardinality": "MANY_TO_ONE",
+      "description": "events.user_id references users.id"
+    }
+  ]
+}

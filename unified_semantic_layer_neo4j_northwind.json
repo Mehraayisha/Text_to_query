@@ -1,0 +1,555 @@
+{
+  "database_id": "neo4j_northwind",
+  "database_name": "Neo4j (northwind)",
+  "database_type": "graph",
+  "dialect": "neo4j_cypher",
+  "entities": {
+    "Product": {
+      "name": "Product",
+      "entity_type": "node_label",
+      "description": "Graph Node Label: Product",
+      "attributes": [
+        {
+          "name": "reorderLevel",
+          "data_type": "Long",
+          "generic_type": "NUMBER",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "unitsInStock",
+          "data_type": "Long",
+          "generic_type": "NUMBER",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "unitPrice",
+          "data_type": "Double",
+          "generic_type": "NUMBER",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "supplierID",
+          "data_type": "String",
+          "generic_type": "STRING",
+          "is_primary_key": true,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "productID",
+          "data_type": "String",
+          "generic_type": "STRING",
+          "is_primary_key": true,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "discontinued",
+          "data_type": "Boolean",
+          "generic_type": "BOOLEAN",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "quantityPerUnit",
+          "data_type": "String",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "categoryID",
+          "data_type": "String",
+          "generic_type": "STRING",
+          "is_primary_key": true,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "unitsOnOrder",
+          "data_type": "Long",
+          "generic_type": "NUMBER",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "productName",
+          "data_type": "String",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        }
+      ],
+      "primary_keys": [
+        "supplierID"
+      ]
+    },
+    "Category": {
+      "name": "Category",
+      "entity_type": "node_label",
+      "description": "Graph Node Label: Category",
+      "attributes": [
+        {
+          "name": "categoryID",
+          "data_type": "String",
+          "generic_type": "STRING",
+          "is_primary_key": true,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "description",
+          "data_type": "String",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "categoryName",
+          "data_type": "String",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "picture",
+          "data_type": "String",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        }
+      ],
+      "primary_keys": [
+        "categoryID"
+      ]
+    },
+    "Supplier": {
+      "name": "Supplier",
+      "entity_type": "node_label",
+      "description": "Graph Node Label: Supplier",
+      "attributes": [
+        {
+          "name": "supplierID",
+          "data_type": "String",
+          "generic_type": "STRING",
+          "is_primary_key": true,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "country",
+          "data_type": "String",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "address",
+          "data_type": "String",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "contactTitle",
+          "data_type": "String",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "city",
+          "data_type": "String",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "phone",
+          "data_type": "String",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "contactName",
+          "data_type": "String",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "postalCode",
+          "data_type": "String",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "companyName",
+          "data_type": "String",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "fax",
+          "data_type": "String",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "region",
+          "data_type": "String",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "homePage",
+          "data_type": "String",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        }
+      ],
+      "primary_keys": [
+        "supplierID"
+      ]
+    },
+    "Customer": {
+      "name": "Customer",
+      "entity_type": "node_label",
+      "description": "Graph Node Label: Customer",
+      "attributes": [
+        {
+          "name": "country",
+          "data_type": "String",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "address",
+          "data_type": "String",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "contactTitle",
+          "data_type": "String",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "city",
+          "data_type": "String",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "phone",
+          "data_type": "String",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "contactName",
+          "data_type": "String",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "postalCode",
+          "data_type": "String",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "companyName",
+          "data_type": "String",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "fax",
+          "data_type": "String",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "region",
+          "data_type": "String",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "customerID",
+          "data_type": "String",
+          "generic_type": "STRING",
+          "is_primary_key": true,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        }
+      ],
+      "primary_keys": [
+        "customerID"
+      ]
+    },
+    "Order": {
+      "name": "Order",
+      "entity_type": "node_label",
+      "description": "Graph Node Label: Order",
+      "attributes": [
+        {
+          "name": "customerID",
+          "data_type": "String",
+          "generic_type": "STRING",
+          "is_primary_key": true,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "shipCity",
+          "data_type": "String",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "orderID",
+          "data_type": "String",
+          "generic_type": "STRING",
+          "is_primary_key": true,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "freight",
+          "data_type": "String",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "requiredDate",
+          "data_type": "String",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "employeeID",
+          "data_type": "String",
+          "generic_type": "STRING",
+          "is_primary_key": true,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "shipName",
+          "data_type": "String",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "shipPostalCode",
+          "data_type": "String",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "orderDate",
+          "data_type": "String",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "shipRegion",
+          "data_type": "String",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "shipCountry",
+          "data_type": "String",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "shippedDate",
+          "data_type": "String",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "shipVia",
+          "data_type": "String",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "shipAddress",
+          "data_type": "String",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        }
+      ],
+      "primary_keys": [
+        "customerID"
+      ]
+    }
+  },
+  "relationships": [
+    {
+      "name": "PART_OF",
+      "source_entity": "Product",
+      "source_attribute": "",
+      "target_entity": "Category",
+      "target_attribute": "",
+      "cardinality": "MANY_TO_ONE",
+      "description": "Graph Edge: (:Product)-[:PART_OF]->(:Category)"
+    },
+    {
+      "name": "SUPPLIES",
+      "source_entity": "Supplier",
+      "source_attribute": "",
+      "target_entity": "Product",
+      "target_attribute": "",
+      "cardinality": "MANY_TO_ONE",
+      "description": "Graph Edge: (:Supplier)-[:SUPPLIES]->(:Product)"
+    },
+    {
+      "name": "PURCHASED",
+      "source_entity": "Customer",
+      "source_attribute": "",
+      "target_entity": "Order",
+      "target_attribute": "",
+      "cardinality": "MANY_TO_ONE",
+      "description": "Graph Edge: (:Customer)-[:PURCHASED]->(:Order)"
+    },
+    {
+      "name": "ORDERS",
+      "source_entity": "Order",
+      "source_attribute": "",
+      "target_entity": "Product",
+      "target_attribute": "",
+      "cardinality": "MANY_TO_ONE",
+      "description": "Graph Edge: (:Order)-[:ORDERS]->(:Product)"
+    }
+  ]
+}

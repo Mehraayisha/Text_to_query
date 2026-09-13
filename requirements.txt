@@ -1,0 +1,4 @@
+# Core dependencies for database adapters & schema extraction
+python-dotenv>=1.0.0
+google-cloud-bigquery>=3.0.0
+neo4j>=5.0.0

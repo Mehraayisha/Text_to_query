@@ -1,0 +1,47 @@
+{
+  "database_id": "<unique_db_identifier_e.g_postgres_ecommerce_or_mongo_analytics>",
+  "database_name": "<Human Readable Database Name and Scope, e.g. PostgreSQL (production.public)>",
+  "database_type": "<sql | graph | document | vector | timeseries | key_value | object | api>",
+  "dialect": "<dialect_or_engine_e.g_postgres | mysql | bigquery | neo4j_cypher | mongodb | qdrant_rest | influxql | dynamodb_partiql>",
+  "entities": {
+    "<entity_name>": {
+      "name": "<entity_name_matches_key>",
+      "entity_type": "<table | node_label | collection | vector_payload | timeseries_measurement | bucket | dataset>",
+      "description": "<Human-readable or auto-generated description of entity>",
+      "attributes": [
+        {
+          "name": "<attribute_or_column_or_field_name>",
+          "data_type": "<source_native_type_e.g_INT64 | VARCHAR(255) | String | Double | ObjectId>",
+          "generic_type": "<STRING | NUMBER | BOOLEAN | DATETIME | GEOMETRY | ARRAY | OBJECT | UNKNOWN>",
+          "is_primary_key": true,
+          "is_foreign_key": false,
+          "description": "<Optional attribute description or business context>",
+          "sample_values": []
+        },
+        {
+          "name": "<another_attribute_or_foreign_key>",
+          "data_type": "<source_native_type>",
+          "generic_type": "<STRING | NUMBER | BOOLEAN | DATETIME | GEOMETRY | ARRAY | OBJECT | UNKNOWN>",
+          "is_primary_key": false,
+          "is_foreign_key": true,
+          "description": "<Foreign key or relation attribute>",
+          "sample_values": []
+        }
+      ],
+      "primary_keys": [
+        "<primary_key_attribute_name_1>"
+      ]
+    }
+  },
+  "relationships": [
+    {
+      "name": "<relationship_name_e.g_FK_order_items_orders_or_PART_OF_or_EMBEDDED_IN>",
+      "source_entity": "<source_entity_name>",
+      "source_attribute": "<source_foreign_key_column_or_empty_for_graph>",
+      "target_entity": "<target_entity_name>",
+      "target_attribute": "<target_primary_key_column_or_empty_for_graph>",
+      "cardinality": "<ONE_TO_ONE | ONE_TO_MANY | MANY_TO_ONE | MANY_TO_MANY | UNKNOWN>",
+      "description": "<Semantic description of how source relates to target>"
+    }
+  ]
+}
