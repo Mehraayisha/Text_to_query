@@ -2,11 +2,9 @@ import json
 import os
 import sys
 
-# Ensure site-packages neo4j driver is imported cleanly
+# Ensure site-packages neo4j driver is imported cleanly if present
+GraphDatabase = None
 try:
-    from neo4j import GraphDatabase
-except ImportError:
-    # Fallback to direct resolution if needed
     import importlib.machinery, importlib.util
     cur_dir = os.path.dirname(os.path.abspath(__file__))
     parent_dir = os.path.dirname(cur_dir)
@@ -15,15 +13,18 @@ except ImportError:
     if spec:
         mod = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(mod)
-        GraphDatabase = getattr(mod, "GraphDatabase")
-    else:
-        raise
+        GraphDatabase = getattr(mod, "GraphDatabase", None)
+except Exception:
+    GraphDatabase = None
 
 
 def extract_neo4j_schema(uri, user, password, database="neo4j"):
     """
     Extracts schema metadata for all node labels, properties, and relationships from Neo4j.
     """
+    if GraphDatabase is None:
+        raise ImportError("The 'neo4j' Python driver package is not installed. Please install it via 'pip install neo4j'.")
+
     # Initialize the Neo4j driver
     driver = GraphDatabase.driver(uri, auth=(user, password))
     

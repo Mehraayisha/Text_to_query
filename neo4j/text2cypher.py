@@ -18,9 +18,8 @@ if current_dir not in sys.path:
     sys.path.insert(0, current_dir)
 
 # Ensure official neo4j driver is imported cleanly
+GraphDatabase = None
 try:
-    from neo4j import GraphDatabase
-except ImportError:
     import importlib.machinery, importlib.util
     parent_dir = os.path.dirname(current_dir)
     search_paths = [p for p in sys.path if os.path.abspath(p) not in (current_dir, parent_dir, "")]
@@ -28,9 +27,9 @@ except ImportError:
     if spec:
         mod = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(mod)
-        GraphDatabase = getattr(mod, "GraphDatabase")
-    else:
-        raise
+        GraphDatabase = getattr(mod, "GraphDatabase", None)
+except Exception:
+    GraphDatabase = None
 
 try:
     from dotenv import load_dotenv
@@ -339,6 +338,10 @@ def _format_cell(value: Any, max_width: int) -> str:
 # 4. Interactive Terminal REPL Loop
 # ==============================================================================
 def start_terminal_app():
+    if GraphDatabase is None:
+        print("\n[ERROR] The 'neo4j' Python package is not installed.")
+        print("Please install it with: pip install neo4j\n")
+        return
     """Runs the main interactive Text2Cypher terminal application loop."""
     print("=" * 65)
     print("      NEO4J TEXT2CYPHER TERMINAL APPLICATION")
