@@ -1,15 +1,16 @@
 """
-Abstract Base Adapter Interface.
-Defines the standard interface for database schema extraction into the Unified Semantic Layer.
+Abstract Base Adapter Interface for Neo4j.
 """
 
 from abc import ABC, abstractmethod
-from typing import Dict, Any, Optional
-from semantic_layer import DatabaseMetadata
+try:
+    from .models import DatabaseMetadata
+except ImportError:
+    from models import DatabaseMetadata
 
 
 class BaseAdapter(ABC):
-    """Abstract Base Class for all database paradigm adapters."""
+    """Abstract Base Class for database adapters."""
 
     def __init__(self, database_id: str, database_name: str, dialect: str):
         self.database_id = database_id

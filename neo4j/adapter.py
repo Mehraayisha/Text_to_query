@@ -6,9 +6,17 @@ and building the Unified Semantic Layer.
 
 import os
 from typing import Optional
-from .base_adapter import BaseAdapter
-from semantic_layer import DatabaseMetadata, normalize_neo4j_schema
-from neo4j_schema_extract import extract_neo4j_schema
+
+try:
+    from .base_adapter import BaseAdapter
+    from .models import DatabaseMetadata
+    from .schema_extract import extract_neo4j_schema
+    from .normalizer import normalize_neo4j_schema
+except ImportError:
+    from base_adapter import BaseAdapter
+    from models import DatabaseMetadata
+    from schema_extract import extract_neo4j_schema
+    from normalizer import normalize_neo4j_schema
 
 try:
     from dotenv import load_dotenv
@@ -51,3 +59,7 @@ class Neo4jGraphAdapter(BaseAdapter):
             database_name=self.database_name,
             dialect=self.dialect
         )
+
+
+# Alias
+Neo4jAdapter = Neo4jGraphAdapter

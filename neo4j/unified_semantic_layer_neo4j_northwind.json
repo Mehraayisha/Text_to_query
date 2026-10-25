@@ -522,7 +522,8 @@
       "target_entity": "Category",
       "target_attribute": "",
       "cardinality": "MANY_TO_ONE",
-      "description": "Graph Edge: (:Product)-[:PART_OF]->(:Category)"
+      "description": "Graph Edge: (:Product)-[:PART_OF]->(:Category)",
+      "properties": []
     },
     {
       "name": "SUPPLIES",
@@ -531,7 +532,8 @@
       "target_entity": "Product",
       "target_attribute": "",
       "cardinality": "MANY_TO_ONE",
-      "description": "Graph Edge: (:Supplier)-[:SUPPLIES]->(:Product)"
+      "description": "Graph Edge: (:Supplier)-[:SUPPLIES]->(:Product)",
+      "properties": []
     },
     {
       "name": "PURCHASED",
@@ -540,7 +542,8 @@
       "target_entity": "Order",
       "target_attribute": "",
       "cardinality": "MANY_TO_ONE",
-      "description": "Graph Edge: (:Customer)-[:PURCHASED]->(:Order)"
+      "description": "Graph Edge: (:Customer)-[:PURCHASED]->(:Order)",
+      "properties": []
     },
     {
       "name": "ORDERS",
@@ -549,7 +552,54 @@
       "target_entity": "Product",
       "target_attribute": "",
       "cardinality": "MANY_TO_ONE",
-      "description": "Graph Edge: (:Order)-[:ORDERS]->(:Product)"
+      "description": "Graph Edge: (:Order)-[:ORDERS]->(:Product)",
+      "properties": [
+        {
+          "name": "unitPrice",
+          "data_type": "String",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "productID",
+          "data_type": "String",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "orderID",
+          "data_type": "String",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "discount",
+          "data_type": "String",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "quantity",
+          "data_type": "Long",
+          "generic_type": "NUMBER",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        }
+      ]
     }
   ]
 }

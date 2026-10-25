@@ -1,6 +1,6 @@
 """
-Core Pydantic / Dataclass Models for the Unified Semantic Layer.
-Standardizes metadata representations across SQL, Graph, Document, Vector, Time-Series, Key-Value, Object, and API sources.
+Core Models for the Neo4j Unified Semantic Layer.
+Standardizes metadata representations across entities, attributes, and graph relationships.
 """
 
 from dataclasses import dataclass, field, asdict
@@ -98,7 +98,7 @@ class AttributeSchema:
 @dataclass
 class EntitySchema:
     name: str
-    entity_type: str = EntityType.TABLE.value
+    entity_type: str = EntityType.NODE_LABEL.value
     description: str = ""
     attributes: List[AttributeSchema] = field(default_factory=list)
     primary_keys: List[str] = field(default_factory=list)
@@ -116,7 +116,7 @@ class EntitySchema:
     def from_dict(cls, d: Dict[str, Any]) -> "EntitySchema":
         return cls(
             name=d.get("name", ""),
-            entity_type=d.get("entity_type", EntityType.TABLE.value),
+            entity_type=d.get("entity_type", EntityType.NODE_LABEL.value),
             description=d.get("description", ""),
             attributes=[AttributeSchema.from_dict(a) for a in d.get("attributes", [])],
             primary_keys=d.get("primary_keys", []),
@@ -132,12 +132,26 @@ class RelationshipSchema:
     target_attribute: str
     cardinality: str = Cardinality.MANY_TO_ONE.value
     description: str = ""
+    properties: List[AttributeSchema] = field(default_factory=list)
+
+    def to_triplet(self) -> str:
+        """Returns the relationship as an explicit directional triplet with property metadata."""
+        if self.properties:
+            props_str = ", ".join(f"{p.name}: {p.data_type}" for p in self.properties)
+            return f"(:{self.source_entity})-[:{self.name} {{{props_str}}}]->(:{self.target_entity})"
+        return f"(:{self.source_entity})-[:{self.name}]->(:{self.target_entity})"
 
     def to_dict(self) -> Dict[str, Any]:
-        return asdict(self)
+        d = asdict(self)
+        d["properties"] = [p.to_dict() if hasattr(p, "to_dict") else p for p in self.properties]
+        return d
 
     @classmethod
     def from_dict(cls, d: Dict[str, Any]) -> "RelationshipSchema":
+        props = [
+            AttributeSchema.from_dict(p) if isinstance(p, dict) else p
+            for p in d.get("properties", [])
+        ]
         return cls(
             name=d.get("name", ""),
             source_entity=d.get("source_entity", ""),
@@ -146,6 +160,7 @@ class RelationshipSchema:
             target_attribute=d.get("target_attribute", ""),
             cardinality=d.get("cardinality", Cardinality.MANY_TO_ONE.value),
             description=d.get("description", ""),
+            properties=props,
         )
 
 
@@ -153,10 +168,18 @@ class RelationshipSchema:
 class DatabaseMetadata:
     database_id: str
     database_name: str
-    database_type: str  # from DatabaseType enum value
-    dialect: str
+    database_type: str = DatabaseType.GRAPH.value
+    dialect: str = "neo4j_cypher"
     entities: Dict[str, EntitySchema] = field(default_factory=dict)
     relationships: List[RelationshipSchema] = field(default_factory=list)
+
+    def get_relationship_triplets(self) -> List[str]:
+        """Returns all relationships as strict directional triplets: (SourceNodeLabel)-[:RELATIONSHIP_TYPE]->(TargetNodeLabel)."""
+        return [
+            rel.to_triplet()
+            for rel in self.relationships
+            if rel.source_entity and rel.target_entity and rel.name
+        ]
 
     def to_dict(self) -> Dict[str, Any]:
         return {
@@ -184,8 +207,8 @@ class DatabaseMetadata:
         return cls(
             database_id=d.get("database_id", ""),
             database_name=d.get("database_name", ""),
-            database_type=d.get("database_type", DatabaseType.SQL.value),
-            dialect=d.get("dialect", "sql"),
+            database_type=d.get("database_type", DatabaseType.GRAPH.value),
+            dialect=d.get("dialect", "neo4j_cypher"),
             entities=entities,
             relationships=relationships,
         )

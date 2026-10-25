@@ -6,9 +6,17 @@ and building the Unified Semantic Layer.
 
 import os
 from typing import Optional
-from .base_adapter import BaseAdapter
-from semantic_layer import DatabaseMetadata, normalize_sql_schema
-from bq_schema_extract import extract_bigquery_schema
+
+try:
+    from .base_adapter import BaseAdapter
+    from .models import DatabaseMetadata
+    from .schema_extract import extract_bigquery_schema
+    from .normalizer import normalize_bigquery_schema
+except ImportError:
+    from base_adapter import BaseAdapter
+    from models import DatabaseMetadata
+    from schema_extract import extract_bigquery_schema
+    from normalizer import normalize_bigquery_schema
 
 try:
     from dotenv import load_dotenv
@@ -50,9 +58,13 @@ class BigQuerySQLAdapter(BaseAdapter):
             self.dataset_id,
             self.key_path
         )
-        return normalize_sql_schema(
+        return normalize_bigquery_schema(
             raw_schema=raw_schema,
             database_id=self.database_id,
             database_name=self.database_name,
             dialect=self.dialect
         )
+
+
+# Alias
+BigQueryAdapter = BigQuerySQLAdapter

@@ -1,7 +1,29 @@
 import json
-from neo4j import GraphDatabase
+import os
+import sys
+
+# Ensure site-packages neo4j driver is imported cleanly
+try:
+    from neo4j import GraphDatabase
+except ImportError:
+    # Fallback to direct resolution if needed
+    import importlib.machinery, importlib.util
+    cur_dir = os.path.dirname(os.path.abspath(__file__))
+    parent_dir = os.path.dirname(cur_dir)
+    search_paths = [p for p in sys.path if os.path.abspath(p) not in (cur_dir, parent_dir, "")]
+    spec = importlib.machinery.PathFinder.find_spec('neo4j', search_paths)
+    if spec:
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        GraphDatabase = getattr(mod, "GraphDatabase")
+    else:
+        raise
+
 
 def extract_neo4j_schema(uri, user, password, database="neo4j"):
+    """
+    Extracts schema metadata for all node labels, properties, and relationships from Neo4j.
+    """
     # Initialize the Neo4j driver
     driver = GraphDatabase.driver(uri, auth=(user, password))
     
@@ -65,7 +87,7 @@ def extract_neo4j_schema(uri, user, password, database="neo4j"):
         except Exception as e:
             print(f"Warning: Could not fetch all relationship types via db.relationshipTypes(): {e}")
 
-        # 4. Fetch Relationship Properties and their Types (Fixed field name to 'relType')
+        # 4. Fetch Relationship Properties and their Types
         try:
             rel_props_query = """
                 CALL db.schema.relTypeProperties() 
@@ -84,7 +106,12 @@ def extract_neo4j_schema(uri, user, password, database="neo4j"):
                 if isinstance(rel_types, str):
                     rel_types = [rel_types]
                     
-                for rel_type in rel_types:
+                for raw_rel in rel_types:
+                    # Clean relType (e.g. :`ORDERS` -> ORDERS)
+                    rel_type = str(raw_rel).replace(":", "").replace("`", "").strip()
+                    if not rel_type:
+                        continue
+
                     if rel_type not in schema_metadata["relationships"]:
                         schema_metadata["relationships"][rel_type] = {
                             "properties": [],
@@ -139,23 +166,20 @@ def extract_neo4j_schema(uri, user, password, database="neo4j"):
     driver.close()
     return schema_metadata
 
+
 if __name__ == "__main__":
-    # Neo4j public labs demo server configuration (Northwind dataset)
     NEO4J_URI = "neo4j+s://demo.neo4jlabs.com"
     NEO4J_USER = "northwind"
     NEO4J_PASSWORD = "northwind"
     NEO4J_DB = "northwind"
     
-    # --- EDIT THIS VARIABLE TO CHANGE YOUR SAVE FILE ---
-    OUTPUT_FILENAME = "semantic_layer_neo4j_northwind.json"
+    output_filename = os.path.join(os.path.dirname(os.path.abspath(__file__)), "semantic_layer_neo4j_northwind.json")
     
     print(f"Extracting schema from public Neo4j dataset at {NEO4J_URI}...")
     try:
         raw_schema = extract_neo4j_schema(NEO4J_URI, NEO4J_USER, NEO4J_PASSWORD, database=NEO4J_DB)
-        
-        with open(OUTPUT_FILENAME, "w") as f:
+        with open(output_filename, "w") as f:
             json.dump(raw_schema, f, indent=2)
-            
-        print(f"Extraction complete! Check {OUTPUT_FILENAME}")
+        print(f"Extraction complete! Saved to {output_filename}")
     except Exception as e:
         print(f"Error during schema extraction: {e}")
