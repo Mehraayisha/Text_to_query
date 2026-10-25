@@ -1,0 +1,396 @@
+{
+  "database_id": "fakestore_api",
+  "database_name": "Fake Store REST API (E-Commerce Simulation)",
+  "database_type": "api",
+  "dialect": "http_rest",
+  "base_url": "https://fakestoreapi.com",
+  "endpoints": {
+    "/products": {
+      "path": "/products",
+      "method": "GET",
+      "description": "Fetch all products or limit/sort them.",
+      "allowed_params": {
+        "limit": {
+          "type": "integer",
+          "description": "Maximum number of product records to return."
+        },
+        "sort": {
+          "type": "string",
+          "enum": ["asc", "desc"],
+          "description": "Sort products by ID in ascending or descending order (default: asc)."
+        }
+      }
+    },
+    "/products/{id}": {
+      "path": "/products/{id}",
+      "method": "GET",
+      "description": "Fetch a single product by its integer ID.",
+      "path_params": {
+        "id": {
+          "type": "integer",
+          "description": "The unique product ID."
+        }
+      },
+      "allowed_params": {}
+    },
+    "/products/categories": {
+      "path": "/products/categories",
+      "method": "GET",
+      "description": "List all available product categories (returns array of category names).",
+      "allowed_params": {}
+    },
+    "/products/category/{category}": {
+      "path": "/products/category/{category}",
+      "method": "GET",
+      "description": "Fetch products filtered by a specific category.",
+      "path_params": {
+        "category": {
+          "type": "string",
+          "enum": [
+            "electronics",
+            "jewelery",
+            "men's clothing",
+            "women's clothing"
+          ],
+          "description": "The category name. Must match one of the standard categories."
+        }
+      },
+      "allowed_params": {
+        "limit": {
+          "type": "integer",
+          "description": "Maximum number of products in this category to return."
+        },
+        "sort": {
+          "type": "string",
+          "enum": ["asc", "desc"],
+          "description": "Sort order by ID."
+        }
+      }
+    },
+    "/carts": {
+      "path": "/carts",
+      "method": "GET",
+      "description": "Fetch all customer shopping carts.",
+      "allowed_params": {
+        "limit": {
+          "type": "integer",
+          "description": "Maximum number of cart records to return."
+        },
+        "sort": {
+          "type": "string",
+          "enum": ["asc", "desc"],
+          "description": "Sort carts by ID in ascending or descending order."
+        },
+        "startdate": {
+          "type": "string",
+          "format": "YYYY-MM-DD",
+          "description": "Filter carts created on or after date (e.g. 2019-12-10)."
+        },
+        "enddate": {
+          "type": "string",
+          "format": "YYYY-MM-DD",
+          "description": "Filter carts created on or before date (e.g. 2020-10-10)."
+        }
+      }
+    },
+    "/carts/{id}": {
+      "path": "/carts/{id}",
+      "method": "GET",
+      "description": "Fetch a single cart by its integer cart ID.",
+      "path_params": {
+        "id": {
+          "type": "integer",
+          "description": "The unique cart ID."
+        }
+      },
+      "allowed_params": {}
+    },
+    "/carts/user/{userId}": {
+      "path": "/carts/user/{userId}",
+      "method": "GET",
+      "description": "Fetch all carts created by a specific user.",
+      "path_params": {
+        "userId": {
+          "type": "integer",
+          "description": "The user ID whose carts to retrieve."
+        }
+      },
+      "allowed_params": {}
+    },
+    "/users": {
+      "path": "/users",
+      "method": "GET",
+      "description": "Fetch user account profiles.",
+      "allowed_params": {
+        "limit": {
+          "type": "integer",
+          "description": "Maximum number of users to return."
+        },
+        "sort": {
+          "type": "string",
+          "enum": ["asc", "desc"],
+          "description": "Sort users by ID (asc or desc)."
+        }
+      }
+    },
+    "/users/{id}": {
+      "path": "/users/{id}",
+      "method": "GET",
+      "description": "Fetch a single user profile by their ID.",
+      "path_params": {
+        "id": {
+          "type": "integer",
+          "description": "The user ID."
+        }
+      },
+      "allowed_params": {}
+    }
+  },
+  "entities": {
+    "products": {
+      "name": "products",
+      "entity_type": "dataset",
+      "description": "Store items including title, pricing, category, and review ratings.",
+      "attributes": [
+        {
+          "name": "id",
+          "data_type": "integer",
+          "generic_type": "NUMBER",
+          "is_primary_key": true,
+          "is_foreign_key": false,
+          "description": "Unique product identifier."
+        },
+        {
+          "name": "title",
+          "data_type": "string",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "Product display title/name."
+        },
+        {
+          "name": "price",
+          "data_type": "number",
+          "generic_type": "NUMBER",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "Price in USD."
+        },
+        {
+          "name": "category",
+          "data_type": "string",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "Product category: electronics, jewelery, men's clothing, women's clothing."
+        },
+        {
+          "name": "description",
+          "data_type": "string",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "Detailed description of the product."
+        },
+        {
+          "name": "image",
+          "data_type": "string",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "URL to product thumbnail image."
+        },
+        {
+          "name": "rating.rate",
+          "data_type": "number",
+          "generic_type": "NUMBER",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "Average review score (0.0 to 5.0)."
+        },
+        {
+          "name": "rating.count",
+          "data_type": "integer",
+          "generic_type": "NUMBER",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "Total number of user ratings."
+        }
+      ],
+      "primary_keys": ["id"]
+    },
+    "carts": {
+      "name": "carts",
+      "entity_type": "dataset",
+      "description": "Customer shopping baskets containing items and quantities.",
+      "attributes": [
+        {
+          "name": "id",
+          "data_type": "integer",
+          "generic_type": "NUMBER",
+          "is_primary_key": true,
+          "is_foreign_key": false,
+          "description": "Cart ID."
+        },
+        {
+          "name": "userId",
+          "data_type": "integer",
+          "generic_type": "NUMBER",
+          "is_primary_key": false,
+          "is_foreign_key": true,
+          "description": "User ID who owns this shopping cart."
+        },
+        {
+          "name": "date",
+          "data_type": "string",
+          "generic_type": "DATETIME",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "ISO timestamp when the cart was created."
+        },
+        {
+          "name": "products",
+          "data_type": "array",
+          "generic_type": "ARRAY",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "List of objects containing productId and quantity."
+        }
+      ],
+      "primary_keys": ["id"]
+    },
+    "users": {
+      "name": "users",
+      "entity_type": "dataset",
+      "description": "Registered user accounts and profiles.",
+      "attributes": [
+        {
+          "name": "id",
+          "data_type": "integer",
+          "generic_type": "NUMBER",
+          "is_primary_key": true,
+          "is_foreign_key": false,
+          "description": "User ID."
+        },
+        {
+          "name": "email",
+          "data_type": "string",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "User contact email."
+        },
+        {
+          "name": "username",
+          "data_type": "string",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "Login username."
+        },
+        {
+          "name": "name.firstname",
+          "data_type": "string",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "First name."
+        },
+        {
+          "name": "name.lastname",
+          "data_type": "string",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "Last name."
+        },
+        {
+          "name": "phone",
+          "data_type": "string",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "Phone number."
+        },
+        {
+          "name": "address.city",
+          "data_type": "string",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "City of residence."
+        }
+      ],
+      "primary_keys": ["id"]
+    }
+  },
+  "relationships": [
+    {
+      "name": "FK_carts_users",
+      "source_entity": "carts",
+      "source_attribute": "userId",
+      "target_entity": "users",
+      "target_attribute": "id",
+      "cardinality": "MANY_TO_ONE",
+      "description": "carts.userId references users.id"
+    },
+    {
+      "name": "FK_cart_items_products",
+      "source_entity": "carts",
+      "source_attribute": "products.productId",
+      "target_entity": "products",
+      "target_attribute": "id",
+      "cardinality": "MANY_TO_ONE",
+      "description": "Cart items reference products.id"
+    }
+  ],
+  "few_shot_examples": [
+    {
+      "question": "Get me the top 3 electronics",
+      "request": {
+        "method": "GET",
+        "url": "https://fakestoreapi.com/products/category/electronics",
+        "params": {
+          "limit": 3
+        }
+      }
+    },
+    {
+      "question": "Show me details for product ID 5",
+      "request": {
+        "method": "GET",
+        "url": "https://fakestoreapi.com/products/5",
+        "params": {}
+      }
+    },
+    {
+      "question": "List the last 2 shopping carts sorted in descending order",
+      "request": {
+        "method": "GET",
+        "url": "https://fakestoreapi.com/carts",
+        "params": {
+          "limit": 2,
+          "sort": "desc"
+        }
+      }
+    },
+    {
+      "question": "Get all shopping carts for user 2",
+      "request": {
+        "method": "GET",
+        "url": "https://fakestoreapi.com/carts/user/2",
+        "params": {}
+      }
+    },
+    {
+      "question": "Show me the first 5 registered users",
+      "request": {
+        "method": "GET",
+        "url": "https://fakestoreapi.com/users",
+        "params": {
+          "limit": 5
+        }
+      }
+    }
+  ]
+}
