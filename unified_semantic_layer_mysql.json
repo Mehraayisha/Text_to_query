@@ -1,0 +1,93 @@
+{
+  "database_id": "mysql_text_to_query",
+  "database_name": "MySQL (text_to_query)",
+  "database_type": "sql",
+  "dialect": "mysql",
+  "entities": {
+    "orders": {
+      "name": "orders",
+      "entity_type": "table",
+      "description": "Table orders",
+      "attributes": [
+        {
+          "name": "id",
+          "data_type": "int",
+          "generic_type": "NUMBER",
+          "is_primary_key": true,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "user_id",
+          "data_type": "int",
+          "generic_type": "NUMBER",
+          "is_primary_key": false,
+          "is_foreign_key": true,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "total",
+          "data_type": "decimal(10,2)",
+          "generic_type": "NUMBER",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ]
+    },
+    "users": {
+      "name": "users",
+      "entity_type": "table",
+      "description": "Table users",
+      "attributes": [
+        {
+          "name": "id",
+          "data_type": "int",
+          "generic_type": "NUMBER",
+          "is_primary_key": true,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "name",
+          "data_type": "varchar(100)",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        },
+        {
+          "name": "email",
+          "data_type": "varchar(255)",
+          "generic_type": "STRING",
+          "is_primary_key": false,
+          "is_foreign_key": false,
+          "description": "",
+          "sample_values": []
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ]
+    }
+  },
+  "relationships": [
+    {
+      "name": "FK_orders_users",
+      "source_entity": "orders",
+      "source_attribute": "user_id",
+      "target_entity": "users",
+      "target_attribute": "id",
+      "cardinality": "MANY_TO_ONE",
+      "description": "orders.user_id references users.id"
+    }
+  ]
+}

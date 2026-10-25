@@ -227,6 +227,20 @@ python neo4j/text2cypher.py
 * `"Show the top 5 customers who have placed the most orders."`
 * `"Find all suppliers located in the USA and list their products."`
 
+### 🔹 MySQL Text-to-SQL (`chat_mysql.py`)
+Extract the configured MySQL schema, translate natural-language questions into
+read-only MySQL SQL using Gemini Flash, execute the query, and summarize the results.
+
+Configure the `MYSQL_*` and `GEMINI_*` values in `.env`, then run:
+
+```bash
+python chat_mysql.py
+```
+
+Only one `SELECT` or `WITH` statement is accepted, and results are limited to 100 rows.
+The MySQL adapter uses the shared semantic models from `bigquery/models.py` so its
+metadata remains compatible with the repository's unified semantic-layer format.
+
 ---
 
 ## 🔄 Schema Extraction & Semantic Layer Generation
@@ -245,9 +259,14 @@ python bigquery/main.py
 
 # Neo4j only
 python neo4j/main.py
+
+# MySQL only
+python run_mysql.py
 ```
 
-The generated files (`unified_semantic_layer_bq_thelook.json` and `unified_semantic_layer_neo4j_northwind.json`) represent the standardized source of truth consumed by the prompt engine and query generators.
+The generated files represent the standardized source of truth consumed by the prompt
+engine and query generators. MySQL output is written to
+`unified_semantic_layer_mysql.json`.
 
 ---
 
@@ -257,6 +276,8 @@ The generated files (`unified_semantic_layer_bq_thelook.json` and `unified_seman
 - [x] Unified Semantic Layer JSON specification & Dataclass models
 - [x] Google Cloud BigQuery schema extractor & normalizer
 - [x] Neo4j Graph database schema extractor & normalizer
+- [x] MySQL schema extractor & adapter
+- [x] MySQL natural-language read-only query client with Gemini Flash
 - [x] Interactive BigQuery Text-to-SQL engine with Ollama (Llama 3.1) & live execution
 - [x] Interactive Neo4j Text-to-Cypher engine with Ollama (Llama 3.1) & live execution
 - [ ] Selective Metadata Retrieval module (RAG / vector embeddings over semantic layers)
