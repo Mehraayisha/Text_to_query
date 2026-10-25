@@ -209,7 +209,10 @@ Question: {user_question}
 SQL query:"""
 
 
-def call_ollama(prompt: str, model: str = OLLAMA_MODEL, endpoint: str = OLLAMA_ENDPOINT, timeout: int = 120) -> str:
+OLLAMA_TIMEOUT = int(os.getenv("OLLAMA_TIMEOUT", "240"))
+
+
+def call_ollama(prompt: str, model: str = OLLAMA_MODEL, endpoint: str = OLLAMA_ENDPOINT, timeout: int = OLLAMA_TIMEOUT) -> str:
     """Sends the generation prompt to the local Ollama model."""
     payload = {
         "model": model,
