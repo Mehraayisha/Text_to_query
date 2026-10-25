@@ -1,0 +1,68 @@
+# Environment and secrets
+.env
+*.key
+*.pem
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+*.whl
+
+# Logs
+*.log
+logs/
+server.log
+nohup.out
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Virtual environments
+venv/
+env/
+ENV/
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*.backup
+architecture copy.html
+.pypirc
+
+# Coverage reports
+.coverage
+htmlcov/
+coverage.xml
+
+# Demo/Presentation files
+DEMO_PRESENTATION.md
+DEMO_PRESENTATION*.pptx
+USE_CASE_BENEFITS.md
+USE_CASE_BENEFITS.pptx
+*.pptx
+
+# Planning and enhancement documentation (internal use)
+MCP_*.md
+MCP_*.html
+MIGRATION_CHECKLIST.md
+.playwright-mcp/
+
+# Customer-specific semantic models (add your own as needed)
+semantic_models/SCReg_CollectionInfo_V4.yaml
+semantic_models/SLShippingDocuments_semantic_model_convert_V4.yaml
+semantic_models/b2btransaction_semantic_model_template.yaml
