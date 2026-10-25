@@ -540,8 +540,8 @@
           "name": "order_id",
           "data_type": "INT64",
           "generic_type": "NUMBER",
-          "is_primary_key": false,
-          "is_foreign_key": true,
+          "is_primary_key": true,
+          "is_foreign_key": false,
           "description": "",
           "sample_values": []
         },
@@ -618,7 +618,9 @@
           "sample_values": []
         }
       ],
-      "primary_keys": []
+      "primary_keys": [
+        "order_id"
+      ]
     },
     "events": {
       "name": "events",
@@ -754,9 +756,9 @@
       "source_entity": "order_items",
       "source_attribute": "order_id",
       "target_entity": "orders",
-      "target_attribute": "id",
+      "target_attribute": "order_id",
       "cardinality": "MANY_TO_ONE",
-      "description": "order_items.order_id references orders.id"
+      "description": "order_items.order_id references orders.order_id"
     },
     {
       "name": "FK_order_items_users",
@@ -802,15 +804,6 @@
       "target_attribute": "id",
       "cardinality": "MANY_TO_ONE",
       "description": "products.distribution_center_id references distribution_centers.id"
-    },
-    {
-      "name": "FK_orders_orders",
-      "source_entity": "orders",
-      "source_attribute": "order_id",
-      "target_entity": "orders",
-      "target_attribute": "id",
-      "cardinality": "MANY_TO_ONE",
-      "description": "orders.order_id references orders.id"
     },
     {
       "name": "FK_orders_users",

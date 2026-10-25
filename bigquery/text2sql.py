@@ -48,6 +48,7 @@ DATASET_PREFIX = f"`{BIGQUERY_TARGET_PROJECT}.{BIGQUERY_DATASET}`"
 # ==============================================================================
 BUSINESS_RULES = [
     f"Fully-Qualified Table References: Always reference tables using backticks with the dataset prefix, for example: `{BIGQUERY_TARGET_PROJECT}.{BIGQUERY_DATASET}.orders`, `{BIGQUERY_TARGET_PROJECT}.{BIGQUERY_DATASET}.order_items`, etc.",
+    "Orders Table Identifier: The primary key of the 'orders' table is 'order_id' (NOT 'id'). Any join between order_items and orders MUST use: order_items.order_id = orders.order_id.",
     "Total Revenue / Sales Amount: Calculated as SUM(order_items.sale_price) for non-returned items (e.g., WHERE order_items.status NOT IN ('Cancelled', 'Returned')).",
     "Gross Margin / Profit: Calculated as SUM(order_items.sale_price - inventory_items.cost) by joining order_items and inventory_items on inventory_item_id = inventory_items.id.",
     "Completed Orders: Filter using orders.status = 'Complete' (or order_items.status = 'Complete').",
@@ -81,6 +82,19 @@ FEW_SHOT_EXAMPLES = [
             f"GROUP BY u.id, customer_name\n"
             f"HAVING total_spend > 1000\n"
             f"ORDER BY total_spend DESC"
+        )
+    },
+    {
+        "question": "Which top 5 countries have the highest total revenue from completed orders? Return country, total completed orders, and total revenue.",
+        "sql": (
+            f"SELECT u.country, COUNT(DISTINCT o.order_id) AS total_completed_orders, ROUND(SUM(oi.sale_price), 2) AS total_revenue\n"
+            f"FROM `{BIGQUERY_TARGET_PROJECT}.{BIGQUERY_DATASET}.users` u\n"
+            f"JOIN `{BIGQUERY_TARGET_PROJECT}.{BIGQUERY_DATASET}.orders` o ON u.id = o.user_id\n"
+            f"JOIN `{BIGQUERY_TARGET_PROJECT}.{BIGQUERY_DATASET}.order_items` oi ON o.order_id = oi.order_id\n"
+            f"WHERE o.status = 'Complete'\n"
+            f"GROUP BY u.country\n"
+            f"ORDER BY total_revenue DESC\n"
+            f"LIMIT 5"
         )
     },
     {
@@ -137,16 +151,20 @@ def format_schema_for_llm(semantic_data: Dict[str, Any]) -> str:
     lines = [f"Tables & Columns (Dataset Prefix: `{BIGQUERY_TARGET_PROJECT}.{BIGQUERY_DATASET}`):"]
     for table_name, table_info in entities.items():
         columns = table_info.get("attributes", [])
+        primary_keys = table_info.get("primary_keys", [])
         col_strs = []
         for c in columns:
             name = c.get("name")
             data_type = c.get("data_type", "STRING")
-            col_strs.append(f"{name}: {data_type}")
+            if name in primary_keys or c.get("is_primary_key"):
+                col_strs.append(f"{name}: {data_type} [PK]")
+            else:
+                col_strs.append(f"{name}: {data_type}")
         
         cols_formatted = ", ".join(col_strs) if col_strs else "no columns"
         lines.append(f"  `{BIGQUERY_TARGET_PROJECT}.{BIGQUERY_DATASET}.{table_name}` ({cols_formatted})")
 
-    lines.append("\nExplicit Foreign Key JOIN Paths (Use ONLY these join conditions):")
+    lines.append("\nExplicit Foreign Key JOIN Paths (When joining tables, you must EXACTLY COPY AND PASTE these join conditions):")
     seen_joins = set()
     for rel in relationships:
         src = rel.get("source_entity")
@@ -198,9 +216,10 @@ Business Rules & Calculation Definitions:
 Strict Constraints & SQL Generation Rules:
 1. Standard SQL: Generate only Google Cloud BigQuery Standard SQL.
 2. Fully-Qualified Tables: Always qualify table names using backticks with the dataset prefix: `{BIGQUERY_TARGET_PROJECT}.{BIGQUERY_DATASET}.<table_name>`.
-3. Strict Joins: Adhere strictly to the explicit foreign key JOIN paths defined above. Never invent relationships or join on mismatched columns.
-4. Type Safety: Respect column data types (INT64, FLOAT64, STRING, TIMESTAMP, BOOL). For timestamp calculations, use standard BigQuery functions like EXTRACT() or FORMAT_TIMESTAMP().
-5. Output ONLY the raw SQL query. Do not wrap in markdown or include conversational text.
+3. CRITICAL Column Accuracy: NEVER guess, assume, or invent column names like id. You must ONLY use the exact column names explicitly listed in the schema. In particular, note that the 'orders' table primary key column is named 'order_id' (NOT 'id').
+4. Strict JOIN Enforcement: When joining tables, you must EXACTLY COPY AND PASTE the provided foreign key JOIN conditions. Do not alter the column names in the provided join paths (for example, joining order_items and orders MUST be `order_items.order_id = orders.order_id`, NEVER `orders.id`).
+5. Type Safety: Respect column data types (INT64, FLOAT64, STRING, TIMESTAMP, BOOL). For timestamp calculations, use standard BigQuery functions like EXTRACT() or FORMAT_TIMESTAMP().
+6. Output ONLY the raw SQL query. Do not wrap in markdown or include conversational text.
 
 Few-Shot Examples:
 {examples_block}

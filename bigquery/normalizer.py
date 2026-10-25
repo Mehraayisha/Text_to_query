@@ -48,9 +48,9 @@ def normalize_bigquery_schema(
         for col in columns:
             col_name = col.get("column_name", "")
             raw_type = col.get("data_type", "STRING")
-            desc = col.get("description", "")
-            is_pk = col.get("is_primary_key", col_name.lower() == "id")
-            is_fk = col.get("is_foreign_key", col_name.lower().endswith("_id") and col_name.lower() != "id")
+            # orders table uses order_id as its primary key
+            is_pk = col.get("is_primary_key", col_name.lower() == "id" or (table_name.lower() == "orders" and col_name.lower() == "order_id"))
+            is_fk = col.get("is_foreign_key", col_name.lower().endswith("_id") and col_name.lower() != "id" and not is_pk)
 
             if is_pk:
                 primary_keys.append(col_name)
@@ -66,21 +66,23 @@ def normalize_bigquery_schema(
             )
             attributes.append(attr)
 
-            # Auto-infer relationship from foreign key naming convention (e.g. order_id -> orders.id)
+            # Auto-infer relationship from foreign key naming convention
             if is_fk:
                 ref_target = col_name.lower()[:-3] + "s"  # simple plural heuristic e.g. user_id -> users
                 if ref_target in raw_schema or col_name.lower()[:-3] in raw_schema:
                     target_table = ref_target if ref_target in raw_schema else col_name.lower()[:-3]
-                    rel = RelationshipSchema(
-                        name=f"FK_{table_name}_{target_table}",
-                        source_entity=table_name,
-                        source_attribute=col_name,
-                        target_entity=target_table,
-                        target_attribute="id",
-                        cardinality=Cardinality.MANY_TO_ONE.value,
-                        description=f"{table_name}.{col_name} references {target_table}.id"
-                    )
-                    relationships.append(rel)
+                    if target_table != table_name:  # Avoid self-referencing non-sensical joins
+                        target_col = "order_id" if target_table == "orders" else "id"
+                        rel = RelationshipSchema(
+                            name=f"FK_{table_name}_{target_table}",
+                            source_entity=table_name,
+                            source_attribute=col_name,
+                            target_entity=target_table,
+                            target_attribute=target_col,
+                            cardinality=Cardinality.MANY_TO_ONE.value,
+                            description=f"{table_name}.{col_name} references {target_table}.{target_col}"
+                        )
+                        relationships.append(rel)
 
         entity = EntitySchema(
             name=table_name,
