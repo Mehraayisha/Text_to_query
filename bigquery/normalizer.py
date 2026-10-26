@@ -55,6 +55,7 @@ def normalize_bigquery_schema(
             if is_pk:
                 primary_keys.append(col_name)
 
+            desc = col.get("description", "")
             attr = AttributeSchema(
                 name=col_name,
                 data_type=raw_type,

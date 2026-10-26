@@ -38,7 +38,9 @@ class Neo4jGraphAdapter(BaseAdapter):
         uri = uri or os.getenv("NEO4J_URI", "neo4j+s://demo.neo4jlabs.com")
         user = user or os.getenv("NEO4J_USER", "northwind")
         password = password or os.getenv("NEO4J_PASSWORD", "northwind")
-        database = database or os.getenv("NEO4J_DATABASE", "northwind")
+        database = database or os.getenv("NEO4J_DATABASE", "neo4j")
+        if database.lower() == "northwind":
+            database = "neo4j"
 
         super().__init__(
             database_id=f"neo4j_{database}",

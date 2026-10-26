@@ -49,7 +49,9 @@ OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "llama3.1")
 NEO4J_URI = os.getenv("NEO4J_URI", "neo4j+s://demo.neo4jlabs.com")
 NEO4J_USER = os.getenv("NEO4J_USER", "northwind")
 NEO4J_PASSWORD = os.getenv("NEO4J_PASSWORD", "northwind")
-NEO4J_DATABASE = os.getenv("NEO4J_DATABASE", "northwind")
+NEO4J_DATABASE = os.getenv("NEO4J_DATABASE", "neo4j")
+if NEO4J_DATABASE.lower() == "northwind":
+    NEO4J_DATABASE = "neo4j"
 
 SEMANTIC_LAYER_FILE = os.path.join(current_dir, "unified_semantic_layer_neo4j_northwind.json")
 

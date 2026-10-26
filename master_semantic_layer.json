@@ -1,0 +1,59 @@
+{
+  "catalog_version": "2.1.0",
+  "description": "High-level abstract catalog of enterprise databases with federated shared keys for multi-database query dispatching.",
+  "databases": {
+    "bigquery_thelook": {
+      "type": "sql_data_warehouse",
+      "dialect": "bigquery",
+      "business_domain": "Online Store & E-Commerce",
+      "description": "Our public-facing e-commerce SQL data warehouse for retail web analytics, customer transactions, digital products, inventory tracking, and web traffic events.",
+      "tables": {
+        "users": "Retail consumer accounts, demographic details, contact information (email), signup dates, and geographical locations.",
+        "orders": "Web store customer orders, overall order statuses (Complete, Cancelled, Returned), creation timestamps, and item counts.",
+        "order_items": "Individual purchased items in an order, sale prices, fulfillment status, and product/inventory linkages.",
+        "products": "Online store retail product catalog, retail pricing, product names, brand names, departments, and category classifications.",
+        "inventory_items": "Physical inventory stock in distribution centers, unit acquisition costs, and product identifiers.",
+        "distribution_centers": "Regional fulfillment centers and warehouse locations with geographic coordinates.",
+        "events": "Web clickstream traffic, session tracking, browsing behavior, visitor IP addresses, and user site actions."
+      }
+    },
+    "neo4j_northwind": {
+      "type": "graph_database",
+      "dialect": "cypher",
+      "business_domain": "Internal HR & Supply Chain Logistics",
+      "description": "Our internal HR management and supply chain graph database modeling enterprise organizational hierarchy, vendor relationships, product supply logistics, and corporate B2B clients.",
+      "core_nodes": {
+        "Employee": "Internal staff members, job titles, manager hierarchy, email addresses, and employment territories.",
+        "Supplier": "External commercial vendors, manufacturing suppliers, contact representatives, contact emails, and company origins.",
+        "Category": "High-level supply chain classification groups for materials and products.",
+        "Product": "Internal supply chain product catalog, wholesale unit pricing, product names, reorder thresholds, and current stock levels.",
+        "Customer": "B2B commercial clients, corporate trading accounts, and regional corporate addresses.",
+        "Order": "Enterprise procurement orders, freight logistics, shipment carriers, and destination regions."
+      },
+      "core_relationships": {
+        "REPORTS_TO": "(:Employee)-[:REPORTS_TO]->(:Employee) - Models management and organizational reporting hierarchy.",
+        "SUPPLIES": "(:Supplier)-[:SUPPLIES]->(:Product) - Tracks which vendor manufactures and supplies specific wholesale products.",
+        "PART_OF": "(:Product)-[:PART_OF]->(:Category) - Classifies products into supply chain categories.",
+        "PURCHASED": "(:Customer)-[:PURCHASED]->(:Order) - Connects B2B corporate clients to their purchase orders.",
+        "ORDERS": "(:Order)-[:ORDERS]->(:Product) - Detailed order line-item relationships with quantity and unit cost properties."
+      }
+    }
+  },
+  "shared_keys": {
+    "user_employee_email": {
+      "bigquery_field": "users.email",
+      "neo4j_field": "Employee.email",
+      "description": "Matches online retail consumer accounts in BigQuery to internal company employees in Neo4j to identify internal employee retail orders, employee discounts, or dual-role activity."
+    },
+    "supplier_contact_email": {
+      "bigquery_field": "users.email",
+      "neo4j_field": "Supplier.contact_email",
+      "description": "Links online retail customer profiles in BigQuery with external supply chain vendor contacts in Neo4j."
+    },
+    "product_name_and_category": {
+      "bigquery_field": "products.name / products.category",
+      "neo4j_field": "Product.productName / Category.categoryName",
+      "description": "Correlates public-facing retail store sales and revenue in BigQuery with backend supplier vendors, wholesale costs, and stock levels in Neo4j."
+    }
+  }
+}
